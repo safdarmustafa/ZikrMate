@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 private val Context.dataStore by preferencesDataStore(name = "tasbih_prefs")
-
+private val ACCOUNT_CREATED = stringPreferencesKey("account_created")
 object DataStoreManager {
 
     // ===============================
@@ -69,7 +69,17 @@ object DataStoreManager {
             }
         }
     }
+    suspend fun saveAccountCreationDate(context: Context) {
+        context.dataStore.edit { preferences ->
+            if (preferences[ACCOUNT_CREATED] == null) {
+                preferences[ACCOUNT_CREATED] = java.time.LocalDate.now().toString()
+            }
+        }
+    }
 
+    fun getAccountCreationDate(context: Context): Flow<String?> {
+        return context.dataStore.data.map { it[ACCOUNT_CREATED] }
+    }
     // ===============================
     // 🔔 AZAN MODE (NEW)
     // ===============================

@@ -2,6 +2,8 @@ package com.example.tasbihcounter
 
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.*
+import com.google.firebase.auth.FirebaseAuth
 
 import android.media.AudioAttributes
 import android.media.SoundPool
@@ -109,7 +111,6 @@ fun AppNavigation() {
                     label = { Text("Qibla") }
                 )
 
-                // ✅ NEW DUA TAB
                 NavigationBarItem(
                     selected = currentRoute == "dua",
                     onClick = {
@@ -120,6 +121,19 @@ fun AppNavigation() {
                     },
                     icon = { Text("📖") },
                     label = { Text("Dua") }
+                )
+
+                // ✅ PROFILE TAB
+                NavigationBarItem(
+                    selected = currentRoute == "profile",
+                    onClick = {
+                        navController.navigate("profile") {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    },
+                    icon = { Text("👤") },
+                    label = { Text("Profile") }
                 )
             }
         }
@@ -147,9 +161,23 @@ fun AppNavigation() {
                 )
             }
 
-            // ✅ NEW ROUTE
             composable("dua") {
                 DuaScreen()
+            }
+
+            // ✅ PROFILE ROUTE (CORRECT PLACE)
+            composable("profile") {
+                ProfileScreen(
+                    onLogout = {
+                        com.google.firebase.auth.FirebaseAuth
+                            .getInstance()
+                            .signOut()
+
+                        navController.navigate("tasbih") {
+                            popUpTo(0)
+                        }
+                    }
+                )
             }
         }
     }
@@ -387,8 +415,21 @@ fun IslamicSplash() {
 }
 @Composable
 fun AuthGate() {
-    val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+
+    val auth = FirebaseAuth.getInstance()
     var isLoggedIn by remember { mutableStateOf(auth.currentUser != null) }
+
+    DisposableEffect(Unit) {
+        val listener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            isLoggedIn = firebaseAuth.currentUser != null
+        }
+
+        auth.addAuthStateListener(listener)
+
+        onDispose {
+            auth.removeAuthStateListener(listener)
+        }
+    }
 
     if (isLoggedIn) {
         AppNavigation()
