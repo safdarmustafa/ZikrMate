@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.tasbihcounter"
+    namespace = "com.zikrmate.app"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.splashscreenjc"
+        applicationId = "com.zikrmate.app"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

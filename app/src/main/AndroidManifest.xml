@@ -21,7 +21,7 @@
         android:theme="@style/Theme.MySplashScreen">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ZikrMate"
             android:exported="true"
             android:theme="@style/Theme.SplashScreenJc">
 
