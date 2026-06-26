@@ -1,11 +1,26 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,8 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.tasbihcounter.data.DataStoreManager
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -35,7 +50,7 @@ fun ProfileScreen(
     val email = user?.email ?: "No Email"
     val photoUrl = user?.photoUrl
 
-    var totalDhikr by remember { mutableStateOf(0) }
+    var totalDhikr by remember { mutableIntStateOf(0) }
     var mostRecited by remember { mutableStateOf("Calculating...") }
     var accountSince by remember { mutableStateOf("Loading...") }
 
@@ -45,7 +60,6 @@ fun ProfileScreen(
         "اللَّهُ أَكْبَرُ"
     )
 
-    // 🔥 Calculate Total + Most Recited
     LaunchedEffect(Unit) {
 
         val subhan = DataStoreManager.getCount(context, dhikrList[0]).first()
@@ -64,7 +78,6 @@ fun ProfileScreen(
         }
     }
 
-    // 🔥 Account Since
     LaunchedEffect(Unit) {
         DataStoreManager.saveAccountCreationDate(context)
 
@@ -103,7 +116,6 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(60.dp))
 
-            // Avatar
             if (photoUrl != null) {
                 AsyncImage(
                     model = photoUrl,

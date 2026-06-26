@@ -1,4 +1,4 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.prayer
 
 import android.app.Application
 import android.location.Geocoder
@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import com.example.tasbihcounter.util.toLocalTimeSafe
 import java.time.LocalTime
 import java.util.Locale
 import kotlin.time.ExperimentalTime
@@ -20,19 +21,9 @@ class PrayerViewModel(application: Application) : AndroidViewModel(application) 
         private set
 
     init {
-        loadFallbackPrayerTimes()
+        // Don't use a fixed fallback (e.g. Delhi); wait for real location so UI shows "Detecting location..."
     }
 
-    // ✅ Instant fallback (no delay)
-    private fun loadFallbackPrayerTimes() {
-
-        val latitude = 28.6139
-        val longitude = 77.2090
-
-        updatePrayerTimes(latitude, longitude)
-    }
-
-    // ✅ Public so UI can call it after GPS fetch
     fun updatePrayerTimes(lat: Double, lng: Double) {
 
         val adhanTimes =
@@ -49,7 +40,6 @@ class PrayerViewModel(application: Application) : AndroidViewModel(application) 
         updateCityName(lat, lng)
     }
 
-    // ✅ Reverse geocode to get city name
     private fun updateCityName(lat: Double, lng: Double) {
 
         try {

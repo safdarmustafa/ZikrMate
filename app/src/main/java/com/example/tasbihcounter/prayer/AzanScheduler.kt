@@ -1,10 +1,11 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.prayer
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import java.time.Duration
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 
 object AzanScheduler {
@@ -22,7 +23,7 @@ object AzanScheduler {
 
         if (delay <= 0) return
 
-        val data = workDataOf("prayer" to prayerName)
+        val data = androidx.work.workDataOf("prayer" to prayerName)
 
         val request = OneTimeWorkRequestBuilder<AzanWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)

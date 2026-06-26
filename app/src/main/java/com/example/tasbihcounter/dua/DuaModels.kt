@@ -1,4 +1,4 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.dua
 
 data class Dua(
     val title: String,

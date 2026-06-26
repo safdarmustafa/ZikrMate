@@ -1,4 +1,4 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.prayer
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,6 +9,9 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.example.tasbihcounter.R
+import com.example.tasbihcounter.data.AzanMode
+import com.example.tasbihcounter.data.DataStoreManager
 import kotlinx.coroutines.flow.first
 
 class AzanWorker(
@@ -25,12 +28,10 @@ class AzanWorker(
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE)
                     as NotificationManager
 
-        // 🔔 Get user selected mode from DataStore
         val azanMode = DataStoreManager
             .getAzanMode(applicationContext)
             .first()
 
-        // 🚫 SILENT MODE → Do nothing
         if (azanMode == AzanMode.SILENT) {
             return Result.success()
         }
@@ -74,7 +75,6 @@ class AzanWorker(
             notificationManager.createNotificationChannel(channel)
         }
 
-        // 🔔 Build Notification
         val notification = NotificationCompat.Builder(
             applicationContext,
             channelId

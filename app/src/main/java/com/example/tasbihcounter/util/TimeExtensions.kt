@@ -1,4 +1,4 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.util
 
 import kotlinx.datetime.Instant
 import java.time.LocalTime

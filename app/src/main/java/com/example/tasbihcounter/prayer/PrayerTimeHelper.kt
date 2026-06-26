@@ -1,6 +1,8 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.prayer
 
-import com.batoulapps.adhan2.*
+import com.batoulapps.adhan2.CalculationMethod
+import com.batoulapps.adhan2.Coordinates
+import com.batoulapps.adhan2.PrayerTimes
 import com.batoulapps.adhan2.data.DateComponents
 import java.util.Calendar
 

@@ -1,12 +1,13 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.qibla
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.hardware.*
-import android.location.Location
-import android.location.LocationManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
@@ -14,9 +15,22 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -29,7 +43,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import kotlin.math.*
+import com.example.tasbihcounter.R
+import com.example.tasbihcounter.location.getUserLocation
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
 fun QiblaScreen(onBack: () -> Unit) {
@@ -87,44 +106,46 @@ fun PremiumCompass() {
 
     val context = LocalContext.current
     val sensorManager =
-        context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    val locationManager =
-        context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        context.getSystemService(android.content.Context.SENSOR_SERVICE) as SensorManager
 
     var azimuth by remember { mutableFloatStateOf(0f) }
     var qiblaBearing by remember { mutableFloatStateOf(0f) }
+    var hasLocation by remember { mutableStateOf(false) }
 
     val kaabaLat = 21.4225
     val kaabaLng = 39.8262
 
-    // 📍 Get last known location
     LaunchedEffect(Unit) {
-        val providers = locationManager.getProviders(true)
-        var bestLocation: Location? = null
-
-        for (provider in providers) {
-            val loc = locationManager.getLastKnownLocation(provider)
-            if (loc != null && (bestLocation == null || loc.accuracy < bestLocation.accuracy)) {
-                bestLocation = loc
-            }
-        }
-
-        bestLocation?.let {
+        // Use the same fused-location helper as the prayer screen so Qibla matches your real city (or emulator mock).
+        val loc = getUserLocation(context)
+        if (loc != null) {
+            val (lat, lng) = loc
             qiblaBearing = calculateQiblaDirection(
-                it.latitude,
-                it.longitude,
+                lat,
+                lng,
                 kaabaLat,
                 kaabaLng
             )
+            hasLocation = true
+        } else {
+            // Safe fallback: approximate Qibla from India (Delhi-ish) so the compass is still usable.
+            val fallbackLat = 28.6139
+            val fallbackLng = 77.2090
+            qiblaBearing = calculateQiblaDirection(
+                fallbackLat,
+                fallbackLng,
+                kaabaLat,
+                kaabaLng
+            )
+            hasLocation = false
         }
     }
 
-    // 🧭 Sensors
     DisposableEffect(Unit) {
 
-        val accelerometer =
+        val accelerometer: Sensor? =
             sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        val magnetometer =
+        val magnetometer: Sensor? =
             sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         val gravity = FloatArray(3)
@@ -168,17 +189,21 @@ fun PremiumCompass() {
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         }
 
-        sensorManager.registerListener(
-            listener,
-            accelerometer,
-            SensorManager.SENSOR_DELAY_GAME
-        )
+        accelerometer?.let {
+            sensorManager.registerListener(
+                listener,
+                it,
+                SensorManager.SENSOR_DELAY_GAME
+            )
+        }
 
-        sensorManager.registerListener(
-            listener,
-            magnetometer,
-            SensorManager.SENSOR_DELAY_GAME
-        )
+        magnetometer?.let {
+            sensorManager.registerListener(
+                listener,
+                it,
+                SensorManager.SENSOR_DELAY_GAME
+            )
+        }
 
         onDispose {
             sensorManager.unregisterListener(listener)
@@ -227,7 +252,6 @@ fun PremiumCompass() {
             modifier = Modifier.size(320.dp)
         ) {
 
-            // Rotating Compass Base
             Box(
                 modifier = Modifier
                     .size(320.dp)
@@ -242,7 +266,6 @@ fun PremiumCompass() {
                     )
                 }
 
-                // Cardinal Directions
                 Box(Modifier.fillMaxSize()) {
 
                     Text(
@@ -284,7 +307,6 @@ fun PremiumCompass() {
                 }
             }
 
-            // Kaaba
             if (qiblaBearing != 0f) {
                 Image(
                     painter = painterResource(id = R.drawable.kaaba),
@@ -316,10 +338,6 @@ fun PremiumCompass() {
         )
     }
 }
-
-// ----------------------------
-// QIBLA MATH FUNCTIONS
-// ----------------------------
 
 fun calculateQiblaDirection(
     userLat: Double,

@@ -1,35 +1,73 @@
-package com.example.tasbihcounter
+package com.example.tasbihcounter.prayer
 
-import androidx.compose.animation.core.*
-import androidx.compose.animation.animateContentSize
+import android.Manifest
+import android.app.Application
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.example.tasbihcounter.data.AzanMode
+import com.example.tasbihcounter.data.DataStoreManager
+import com.example.tasbihcounter.location.getUserLocation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.time.Duration
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import androidx.work.*
-import java.time.LocalDateTime
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 @Composable
@@ -64,17 +102,59 @@ fun PremiumBackground(content: @Composable () -> Unit) {
 
 @Composable
 fun PrayerTrackerScreen(
-    viewModel: PrayerViewModel = viewModel(),
     onBack: () -> Unit
 ) {
-
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
+    // ----- LOCATION PERMISSION -----
+    var hasLocationPermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { perms ->
+        hasLocationPermission =
+            perms[Manifest.permission.ACCESS_FINE_LOCATION] == true
+    }
+
     LaunchedEffect(Unit) {
-        val location = getUserLocation(context)
-        location?.let {
-            viewModel.updatePrayerTimes(it.first, it.second)
+        if (!hasLocationPermission) {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+    val viewModel: PrayerViewModel = viewModel(
+        factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return PrayerViewModel(context.applicationContext as Application) as T
+            }
+        }
+    )
+
+    // ----- FETCH PRAYER TIMES (only once we have permission) -----
+    LaunchedEffect(hasLocationPermission) {
+        if (hasLocationPermission) {
+            val location = getUserLocation(context)
+            if (location != null) {
+                viewModel.updatePrayerTimes(location.first, location.second)
+            } else {
+                // Fallback only when location unavailable (e.g. no GPS, emulator without mock)
+                // Using Patna, Bihar so Indian users get a sensible default
+                viewModel.updatePrayerTimes(25.5941, 85.1376)
+            }
         }
     }
 
@@ -86,10 +166,9 @@ fun PrayerTrackerScreen(
 
     val times = viewModel.prayerTimes
 
-    // 🔔 Schedule Real Azan Notifications
     LaunchedEffect(times) {
         if (times.isNotEmpty()) {
-            times.forEach { (prayerName, prayerTime) ->
+            times.forEach { (prayerName: String, prayerTime: LocalTime) ->
                 val now = LocalDateTime.now()
 
                 val prayerDateTime = now
@@ -123,7 +202,7 @@ fun PrayerTrackerScreen(
     }
 
     LaunchedEffect(Unit) {
-        prayers.forEach { prayer ->
+        prayers.forEach { prayer: String ->
             val saved = DataStoreManager
                 .getPrayerState(context, prayer)
                 .first()
@@ -147,11 +226,11 @@ fun PrayerTrackerScreen(
 
     val nextPrayer = if (times.isNotEmpty()) {
         when {
-            currentTime.isBefore(times["Fajr"]) -> "Fajr"
-            currentTime.isBefore(times["Dhuhr"]) -> "Dhuhr"
-            currentTime.isBefore(times["Asr"]) -> "Asr"
-            currentTime.isBefore(times["Maghrib"]) -> "Maghrib"
-            currentTime.isBefore(times["Isha"]) -> "Isha"
+            currentTime.isBefore(times["Fajr"]!!) -> "Fajr"
+            currentTime.isBefore(times["Dhuhr"]!!) -> "Dhuhr"
+            currentTime.isBefore(times["Asr"]!!) -> "Asr"
+            currentTime.isBefore(times["Maghrib"]!!) -> "Maghrib"
+            currentTime.isBefore(times["Isha"]!!) -> "Isha"
             else -> "Fajr"
         }
     } else {
@@ -179,7 +258,7 @@ fun PrayerTrackerScreen(
     val displayMinutes = (animatedSeconds % 3600) / 60
     val displaySecs = animatedSeconds % 60
 
-    val completedCount = prayerStates.values.count { it }
+    val completedCount = prayerStates.values.count { completed: Boolean -> completed }
     val progress = completedCount / 5f
 
     val animatedProgress by animateFloatAsState(
@@ -187,6 +266,25 @@ fun PrayerTrackerScreen(
         animationSpec = tween(600),
         label = ""
     )
+
+    // If we don't have permission yet, show a friendly message instead of crashing
+    if (!hasLocationPermission) {
+        PremiumBackground {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Allow location to show accurate prayer times.",
+                    color = Color.White,
+                    fontSize = 16.sp
+                )
+            }
+        }
+        return
+    }
 
     PremiumBackground {
 
@@ -197,7 +295,9 @@ fun PrayerTrackerScreen(
         ) {
 
             Column(
-                Modifier.fillMaxSize(),
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -274,7 +374,6 @@ fun PrayerTrackerScreen(
 
                     Spacer(Modifier.height(6.dp))
 
-                    // 🔔 Azan Mode Toggle
                     val azanMode by DataStoreManager
                         .getAzanMode(context)
                         .collectAsState(initial = AzanMode.FULL_SOUND)
@@ -323,14 +422,14 @@ fun PrayerTrackerScreen(
                 }
 
                 Column {
-                    prayers.chunked(2).forEach { rowPrayers ->
+                    prayers.chunked(2).forEach { rowPrayers: List<String> ->
 
                         Row(
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
 
-                            rowPrayers.forEach { prayer ->
+                            rowPrayers.forEach { prayer: String ->
 
                                 val isCompleted = prayerStates[prayer] == true
                                 val time = times[prayer]
