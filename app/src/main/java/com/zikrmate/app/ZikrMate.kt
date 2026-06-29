@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.app.ActivityCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -27,7 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.zikrmate.app.auth.LoginScreen
 import com.zikrmate.app.dua.DuaScreen
 import com.zikrmate.app.profile.ProfileScreen
+import com.zikrmate.app.prayer.PrayerDiagnosticsScreen
 import com.zikrmate.app.prayer.PrayerTrackerScreen
+import com.zikrmate.app.prayer.rememberPrayerViewModel
+import com.zikrmate.app.prayer.rememberPrayerVisualEffects
 import com.zikrmate.app.qibla.QiblaScreen
 import com.zikrmate.app.tasbih.TasbihScreen
 import com.zikrmate.app.ui.theme.SplashScreenJcTheme
@@ -63,6 +67,16 @@ fun AppNavigation() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    fun navigateToTab(route: String) {
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     Scaffold(
         bottomBar = {
             NavigationBar(
@@ -70,62 +84,40 @@ fun AppNavigation() {
             ) {
                 NavigationBarItem(
                     selected = currentRoute == "tasbih",
-                    onClick = {
-                        navController.navigate("tasbih") {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    },
+                    onClick = { navigateToTab("tasbih") },
                     icon = { Text("📿") },
                     label = { Text("Tasbih") }
                 )
                 NavigationBarItem(
                     selected = currentRoute == "prayer",
-                    onClick = {
-                        navController.navigate("prayer") {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    },
+                    onClick = { navigateToTab("prayer") },
                     icon = { Text("🕌") },
                     label = { Text("Prayer") }
                 )
                 NavigationBarItem(
                     selected = currentRoute == "qibla",
-                    onClick = {
-                        navController.navigate("qibla") {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    },
+                    onClick = { navigateToTab("qibla") },
                     icon = { Text("🧭") },
                     label = { Text("Qibla") }
                 )
                 NavigationBarItem(
                     selected = currentRoute == "dua",
-                    onClick = {
-                        navController.navigate("dua") {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    },
+                    onClick = { navigateToTab("dua") },
                     icon = { Text("📖") },
                     label = { Text("Dua") }
                 )
                 NavigationBarItem(
                     selected = currentRoute == "profile",
-                    onClick = {
-                        navController.navigate("profile") {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    },
+                    onClick = { navigateToTab("profile") },
                     icon = { Text("👤") },
                     label = { Text("Profile") }
                 )
             }
         }
     ) { innerPadding ->
+
+        val prayerViewModel = rememberPrayerViewModel()
+        val prayerVisualEffects = rememberPrayerVisualEffects()
 
         NavHost(
             navController = navController,
@@ -139,13 +131,21 @@ fun AppNavigation() {
 
             composable("prayer") {
                 PrayerTrackerScreen(
-                    onBack = { navController.navigate("tasbih") }
+                    viewModel = prayerViewModel,
+                    visualEffects = prayerVisualEffects,
+                    onOpenDiagnostics = { navController.navigate("prayer_diagnostics") }
+                )
+            }
+
+            composable("prayer_diagnostics") {
+                PrayerDiagnosticsScreen(
+                    onBack = { navController.popBackStack() }
                 )
             }
 
             composable("qibla") {
                 QiblaScreen(
-                    onBack = { navController.navigate("tasbih") }
+                    onBack = { navigateToTab("tasbih") }
                 )
             }
 
