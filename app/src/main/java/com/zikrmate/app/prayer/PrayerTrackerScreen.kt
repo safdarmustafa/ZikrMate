@@ -139,8 +139,7 @@ fun PremiumBackground(
 @Composable
 fun PrayerTrackerScreen(
     viewModel: PrayerViewModel,
-    visualEffects: PrayerVisualEffectsState,
-    onOpenDiagnostics: () -> Unit = {}
+    visualEffects: PrayerVisualEffectsState
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -172,6 +171,13 @@ fun PrayerTrackerScreen(
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
+        }
+    }
+
+    // Refresh prayer times/city from live GPS whenever we have permission (initial or just granted).
+    LaunchedEffect(hasLocationPermission) {
+        if (hasLocationPermission) {
+            PrayerEngine.syncLocationIfPermitted(context)
         }
     }
 
@@ -277,7 +283,7 @@ fun PrayerTrackerScreen(
 
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        text = "Next Prayer (tap 5× for diagnostics)",
+                        text = "Next Prayer",
                         fontSize = 12.sp,
                         color = Color.White.copy(0.5f)
                     )
@@ -306,21 +312,13 @@ fun PrayerTrackerScreen(
                         }
                     )
 
-                    var diagnosticsTapCount by remember { mutableStateOf(0) }
                     Spacer(Modifier.height(4.dp))
 
                     Text(
                         uiState.nextPrayerName.uppercase(),
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFFE2C07A),
-                        modifier = Modifier.clickable {
-                            diagnosticsTapCount++
-                            if (diagnosticsTapCount >= 5) {
-                                diagnosticsTapCount = 0
-                                onOpenDiagnostics()
-                            }
-                        }
+                        color = Color(0xFFE2C07A)
                     )
 
                     Spacer(Modifier.height(6.dp))

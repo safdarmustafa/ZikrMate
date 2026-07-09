@@ -25,6 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.zikrmate.app.BuildConfig
 import com.zikrmate.app.auth.LoginScreen
 import com.zikrmate.app.dua.DuaScreen
 import com.zikrmate.app.profile.ProfileScreen
@@ -132,15 +133,16 @@ fun AppNavigation() {
             composable("prayer") {
                 PrayerTrackerScreen(
                     viewModel = prayerViewModel,
-                    visualEffects = prayerVisualEffects,
-                    onOpenDiagnostics = { navController.navigate("prayer_diagnostics") }
+                    visualEffects = prayerVisualEffects
                 )
             }
 
-            composable("prayer_diagnostics") {
-                PrayerDiagnosticsScreen(
-                    onBack = { navController.popBackStack() }
-                )
+            if (BuildConfig.DEBUG) {
+                composable("prayer_diagnostics") {
+                    PrayerDiagnosticsScreen(
+                        onBack = { navController.popBackStack() }
+                    )
+                }
             }
 
             composable("qibla") {

@@ -2,6 +2,7 @@ package com.zikrmate.app.core.prayer
 
 import com.batoulapps.adhan2.CalculationMethod
 import com.batoulapps.adhan2.Coordinates
+import com.batoulapps.adhan2.Madhab
 import com.batoulapps.adhan2.PrayerTimes
 import com.batoulapps.adhan2.data.DateComponents
 import com.zikrmate.app.core.util.PrayerConstants
@@ -26,7 +27,8 @@ object PrayerCalculator {
     ): Map<String, LocalTime> {
         val coordinates = Coordinates(latitude, longitude)
         val dateComponents = DateComponents(date.year, date.monthValue, date.dayOfMonth)
-        val params = CalculationMethod.KARACHI.parameters
+        // Karachi method with Hanafi madhab (Asr when shadow = 2x object length).
+        val params = CalculationMethod.KARACHI.parameters.copy(madhab = Madhab.HANAFI)
         val prayerTimes = PrayerTimes(coordinates, dateComponents, params)
 
         val times = mapOf(

@@ -41,7 +41,7 @@ class PrayerViewModel(application: Application) : AndroidViewModel(application) 
 
     init {
         viewModelScope.launch {
-            loadDisplayCacheOnce()
+            observeDisplayData()
         }
         viewModelScope.launch {
             observePrayerCompletionStates()
@@ -70,25 +70,20 @@ class PrayerViewModel(application: Application) : AndroidViewModel(application) 
         )
     }
 
-    private suspend fun loadDisplayCacheOnce() {
-        if (_uiState.value.hasCache) return
-
-        val cached = repository.getTodayCachedTimes()
-        val partial = if (cached != null) null else repository.getTodayCache()
-        val times = cached
-            ?: partial?.times?.filterKeys { PrayerConstants.PRAYER_NAMES.contains(it) }
-            ?: emptyMap()
-        val sunrise = cached?.get("Sunrise") ?: partial?.times?.get("Sunrise")
-        val city = repository.getCachedCityName() ?: partial?.cityName ?: "—"
-
-        if (times.isNotEmpty() || city != "—") {
-            val now = LocalTime.now()
+    /**
+     * Observes the repository's cached times + city name and keeps the UI in sync.
+     * Reacts to location changes (which recalculate times) without needing a manual reload.
+     */
+    private suspend fun observeDisplayData() {
+        repository.observeDisplayData().collect { display ->
+            val times = display.times.filterKeys { PrayerConstants.PRAYER_NAMES.contains(it) }
+            val current = _uiState.value
             _uiState.value = buildUiState(
                 prayerTimes = times,
-                sunriseTime = sunrise,
-                cityName = city,
-                currentTime = now,
-                prayerStates = _uiState.value.prayerStates,
+                sunriseTime = display.sunrise,
+                cityName = display.cityName,
+                currentTime = current.currentTime,
+                prayerStates = current.prayerStates,
                 hasCache = times.isNotEmpty()
             )
         }

@@ -32,6 +32,13 @@ data class PrayerTimesCache(
     val calculatedAtMillis: Long
 )
 
+/** Lightweight snapshot the UI observes; refreshes automatically when the cache changes. */
+data class PrayerDisplayData(
+    val times: Map<String, LocalTime>,
+    val sunrise: LocalTime?,
+    val cityName: String
+)
+
 /**
  * Persists location and cached prayer times. Only the Prayer Engine writes calculations.
  */
@@ -165,6 +172,24 @@ class PrayerRepository(private val context: Context) {
     }
 
     suspend fun getCachedCityName(): String? = getTodayCache()?.cityName
+
+    /**
+     * Reactive display data for the prayer screen. Emits whenever the cache or city name
+     * changes (e.g. after a location update recalculates times), so the UI stays in sync.
+     */
+    fun observeDisplayData(): kotlinx.coroutines.flow.Flow<PrayerDisplayData> =
+        context.prayerDataStore.data.map { prefs ->
+            val times = buildMap {
+                PrayerConstants.PRAYER_NAMES.forEach { prayer ->
+                    prefs[timeKey(prayer)]?.let {
+                        put(prayer, LocalTime.parse(it, TIME_FORMATTER))
+                    }
+                }
+            }
+            val sunrise = prefs[timeKey("Sunrise")]?.let { LocalTime.parse(it, TIME_FORMATTER) }
+            val city = prefs[cachedCityNameKey] ?: "—"
+            PrayerDisplayData(times, sunrise, city)
+        }
 
     suspend fun isCacheValidForToday(): Boolean {
         val cache = getTodayCache() ?: return false
@@ -330,7 +355,7 @@ class PrayerRepository(private val context: Context) {
     }
 
     companion object {
-        private const val DEFAULT_CALCULATION_METHOD = "KARACHI"
+        private const val DEFAULT_CALCULATION_METHOD = "KARACHI_HANAFI"
         private const val LOCATION_EPSILON = 0.005
 
         private val TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm")

@@ -1,7 +1,10 @@
 package com.zikrmate.app.core.scheduler
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Geocoder
+import androidx.core.content.ContextCompat
 import com.zikrmate.app.core.alarm.ExpectedAlarm
 import com.zikrmate.app.core.alarm.PrayerAlarmRegistry
 import com.zikrmate.app.core.alarm.PrayerAlarmScheduler
@@ -34,7 +37,12 @@ object PrayerEngine {
     private val rescheduleMutex = Mutex()
 
     fun bootstrap(context: Context) {
-        engineScope.launch { bootstrapSync(context) }
+        engineScope.launch {
+            bootstrapSync(context)
+            // After base alarms are set from cached/default location, refresh from live GPS
+            // (if permitted). Runs outside the bootstrap mutex to avoid re-entrant locking.
+            syncLocationIfPermittedSync(context)
+        }
     }
 
     suspend fun bootstrapSync(context: Context) {
@@ -198,14 +206,28 @@ object PrayerEngine {
 
     suspend fun syncLocationIfPermittedSync(context: Context) {
         val appContext = context.applicationContext
+        if (!hasLocationPermission(appContext)) return
         val location = getUserLocation(appContext) ?: return
         val repository = PrayerRepository.getInstance(appContext)
-        if (repository.updateLocationIfChanged(location.first, location.second)) {
+        val changed = repository.updateLocationIfChanged(location.first, location.second)
+        // Always ensure the city name is resolved for display, even on the very first fix
+        // where the stored default happened to match (so the UI stops showing "—").
+        resolveCityName(appContext, location.first, location.second)
+        if (changed) {
             repository.ensureTodayTimesCalculated()
-            resolveCityName(appContext, location.first, location.second)
             rescheduleAllSync(appContext, reason = "location_updated")
         }
     }
+
+    private fun hasLocationPermission(context: Context): Boolean =
+        ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
 
     fun onLocaleChanged(context: Context) {
         engineScope.launch {
