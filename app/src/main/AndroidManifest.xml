@@ -20,6 +20,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:label="@string/app_name"
         android:icon="@drawable/islamic_splash_logo"
         android:roundIcon="@drawable/islamic_splash_logo"
         android:supportsRtl="true"
