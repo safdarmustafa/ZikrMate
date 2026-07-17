@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.zikrmate.app"
+    namespace = "com.falahpro.app"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.zikrmate.app"
+        applicationId = "com.falahpro.app"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

@@ -1,0 +1,41 @@
+package com.falahpro.app.core.util
+
+import java.time.LocalTime
+
+data class PrayerDiagnostics(
+    val currentEpochMillis: Long,
+    val currentDate: String,
+    val latitude: Double,
+    val longitude: Double,
+    val cityName: String?,
+    val calculationMethod: String,
+    val cacheStatus: String,
+    val cacheTimestamp: String?,
+    val prayerTimes: Map<String, LocalTime>,
+    val currentPrayerName: String?,
+    val lastCalculationTime: String?,
+    val lastRescheduleTime: String?,
+    val lastRescheduleReason: String?,
+    val nextPrayerName: String?,
+    val nextAlarmTime: String?,
+    val nextAlarmEpochMillis: Long?,
+    val scheduledAlarmCount: Int,
+    val verifiedAlarmCount: Int,
+    val repairedAlarmCount: Int,
+    val alarmRequestCodes: String,
+    val lastNotificationTime: String?,
+    val lastNotificationPrayer: String?,
+    val lastAzanTime: String?,
+    val lastReceiverTime: String?,
+    val lastReceiverPrayer: String?,
+    val lastBootTime: String?,
+    val exactAlarmPermissionGranted: Boolean,
+    val notificationPermissionGranted: Boolean,
+    val batteryOptimizationIgnored: Boolean,
+    val oemManufacturer: String,
+    val oemGuidance: String?,
+    val foregroundServiceRunning: Boolean,
+    val wakeLockHeld: Boolean,
+    val mediaPlayerActive: Boolean,
+    val audioFocusHeld: Boolean
+)

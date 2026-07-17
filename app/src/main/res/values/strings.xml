@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZikrMate</string>
+    <string name="app_name">Falah Pro</string>
 
     <!-- Firebase Google Auth -->
     <string name="default_web_client_id">

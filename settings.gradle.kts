@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Splash Screen Jc"
+rootProject.name = "Falah Pro"
 include(":app")
  

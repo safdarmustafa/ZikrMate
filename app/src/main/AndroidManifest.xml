@@ -16,7 +16,7 @@
     <uses-feature android:name="android.hardware.sensor.compass"/>
 
     <application
-        android:name=".ZikrMateApplication"
+        android:name=".FalahProApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -27,7 +27,7 @@
         android:theme="@style/Theme.MySplashScreen">
 
         <activity
-            android:name=".ZikrMate"
+            android:name=".FalahPro"
             android:exported="true"
             android:theme="@style/Theme.SplashScreenJc">
 

@@ -1,0 +1,188 @@
+package com.falahpro.app.core.audio
+
+import android.content.Context
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.PowerManager
+import com.falahpro.app.R
+import com.falahpro.app.core.prayer.PrayerRepository
+import com.falahpro.app.core.util.PrayerLog
+import com.falahpro.app.core.util.PrayerRuntimeState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+
+/**
+ * Plays azan with guaranteed WakeLock / MediaPlayer cleanup on every exit path.
+ */
+class AzanAudioPlayer(
+    private val context: Context,
+    private val onComplete: () -> Unit = {}
+) {
+
+    private var mediaPlayer: MediaPlayer? = null
+    private var audioManager: AudioManager? = null
+    private var focusRequest: AudioFocusRequest? = null
+    private var wakeLock: PowerManager.WakeLock? = null
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    fun play() {
+        stop()
+        audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+        if (!requestAudioFocus()) {
+            PrayerLog.warn("AUDIO_FOCUS_DENIED")
+            mainHandler.post(onComplete)
+            return
+        }
+
+        acquireWakeLock()
+        try {
+            val player = MediaPlayer.create(context, R.raw.azan)
+            if (player == null) {
+                PrayerLog.error("MEDIAPLAYER_CREATE_NULL")
+                releaseAll()
+                mainHandler.post(onComplete)
+                return
+            }
+            mediaPlayer = player
+            PrayerRuntimeState.mediaPlayerActive = true
+            player.setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+            player.setOnCompletionListener {
+                PrayerLog.audioCompleted()
+                scope.launch { PrayerRepository.getInstance(context).recordAzanEvent() }
+                releaseAll()
+                mainHandler.post(onComplete)
+            }
+            player.setOnErrorListener { _, what, extra ->
+                PrayerLog.error("MEDIAPLAYER_ERROR", "what=$what extra=$extra")
+                releaseAll()
+                mainHandler.post(onComplete)
+                true
+            }
+            player.start()
+            PrayerLog.audioStarted()
+        } catch (e: Exception) {
+            PrayerLog.error("AUDIO_START_FAILED", e.message ?: "", e)
+            releaseAll()
+            mainHandler.post(onComplete)
+        }
+    }
+
+    fun stop() {
+        releaseAll()
+    }
+
+    private fun releaseAll() {
+        try {
+            releasePlayer()
+        } finally {
+            try {
+                abandonAudioFocus()
+            } finally {
+                releaseWakeLock()
+            }
+        }
+        PrayerRuntimeState.mediaPlayerActive = false
+        PrayerRuntimeState.audioFocusHeld = false
+    }
+
+    private fun releasePlayer() {
+        mediaPlayer?.run {
+            try {
+                if (isPlaying) stop()
+            } catch (_: Exception) {
+            }
+            try {
+                release()
+            } catch (_: Exception) {
+            }
+        }
+        mediaPlayer = null
+    }
+
+    private fun acquireWakeLock() {
+        if (wakeLock?.isHeld == true) return
+        val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = powerManager.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "FalahPro:AzanPlayback"
+        ).apply {
+            setReferenceCounted(false)
+            acquire(10 * 60 * 1000L)
+        }
+        PrayerRuntimeState.wakeLockHeld = true
+        PrayerLog.wakeLockAcquired()
+    }
+
+    private fun releaseWakeLock() {
+        wakeLock?.let {
+            try {
+                if (it.isHeld) it.release()
+            } catch (_: Exception) {
+            }
+        }
+        wakeLock = null
+        if (PrayerRuntimeState.wakeLockHeld) {
+            PrayerRuntimeState.wakeLockHeld = false
+            PrayerLog.wakeLockReleased()
+        }
+    }
+
+    private fun requestAudioFocus(): Boolean {
+        val manager = audioManager ?: return false
+        val focusListener = AudioManager.OnAudioFocusChangeListener { change ->
+            if (change == AudioManager.AUDIOFOCUS_LOSS ||
+                change == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
+            ) {
+                stop()
+                mainHandler.post(onComplete)
+            }
+        }
+        val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val request = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                .setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build()
+                )
+                .setOnAudioFocusChangeListener(focusListener)
+                .build()
+            focusRequest = request
+            manager.requestAudioFocus(request) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+        } else {
+            @Suppress("DEPRECATION")
+            manager.requestAudioFocus(
+                focusListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
+            ) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+        }
+        PrayerRuntimeState.audioFocusHeld = granted
+        return granted
+    }
+
+    private fun abandonAudioFocus() {
+        val manager = audioManager ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            focusRequest?.let { manager.abandonAudioFocusRequest(it) }
+        } else {
+            @Suppress("DEPRECATION")
+            manager.abandonAudioFocus(null)
+        }
+        focusRequest = null
+    }
+}
