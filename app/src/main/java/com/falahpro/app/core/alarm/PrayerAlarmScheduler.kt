@@ -27,7 +27,8 @@ class PrayerAlarmScheduler(private val context: Context) {
     }
 
     /**
-     * Returns true if a matching immutable PendingIntent exists (alarm likely registered).
+     * True if a matching PendingIntent token exists.
+     * Does not guarantee AlarmManager still holds a live alarm.
      */
     fun isAlarmPending(prayerName: String, dayOffset: Int): Boolean {
         return getExistingPendingIntent(prayerName, dayOffset) != null

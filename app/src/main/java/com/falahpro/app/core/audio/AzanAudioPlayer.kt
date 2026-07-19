@@ -72,6 +72,7 @@ class AzanAudioPlayer(
                 mainHandler.post(onComplete)
                 true
             }
+            PrayerLog.event("PLAYING_AZAN")
             player.start()
             PrayerLog.audioStarted()
         } catch (e: Exception) {

@@ -112,6 +112,7 @@ class PrayerNotificationManager(private val context: Context) {
         }
 
         notificationManager.notify(prayerName.hashCode(), builder.build())
+        PrayerLog.event("NOTIFICATION_SHOWN", "prayer=$prayerName")
         PrayerLog.notificationPosted(prayerName)
     }
 

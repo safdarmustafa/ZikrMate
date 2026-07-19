@@ -77,8 +77,10 @@ object PrayerEngine {
     /**
      * Diff-based alarm sync: upsert expected alarms, cancel only obsolete slots.
      * Never cancels all alarms before scheduling — no zero-alarm window.
+     * Always re-registers expected alarms (PendingIntent existence ≠ live AlarmManager registration).
      */
     private suspend fun syncAlarmsInternal(context: Context, reason: String) {
+        PrayerLog.event("SYNC_ALARMS_STARTED", "reason=$reason")
         PrayerLog.rescheduleStarted(reason)
 
         val repository = PrayerRepository.getInstance(context)
@@ -97,6 +99,7 @@ object PrayerEngine {
         notificationManager.updateChannelsForMode(azanMode)
 
         if (azanMode == AzanMode.SILENT) {
+            PrayerLog.warn("AZAN_MODE_SILENT", "all alarms cancelled")
             scheduler.cancelAlarmsExcept(emptySet())
             registry.clear()
             PrayerLog.rescheduleCompleted(0, 0, 0)
@@ -117,29 +120,30 @@ object PrayerEngine {
         val now = System.currentTimeMillis()
 
         for (alarm in expected) {
-            val pending = scheduler.isAlarmPending(alarm.prayerName, alarm.dayOffset)
+            val hadPendingIntent = scheduler.isAlarmPending(alarm.prayerName, alarm.dayOffset)
             val storedTrigger = stored[alarm.requestCode]?.triggerAtMillis
             val triggerDrift = storedTrigger?.let { abs(it - alarm.triggerAtMillis) } ?: Long.MAX_VALUE
-            val needsRepair = !pending ||
-                storedTrigger == null ||
-                triggerDrift > PrayerConstants.ALARM_TRIGGER_TOLERANCE_MS
 
-            if (needsRepair) {
-                val repairReason = when {
-                    !pending -> "pending_intent_missing"
-                    storedTrigger == null -> "registry_missing"
-                    else -> "trigger_drift"
+            if (scheduler.scheduleExactAlarm(alarm.prayerName, alarm.triggerAtMillis, alarm.dayOffset)) {
+                scheduledCount++
+                if (!hadPendingIntent ||
+                    storedTrigger == null ||
+                    triggerDrift > PrayerConstants.ALARM_TRIGGER_TOLERANCE_MS
+                ) {
+                    repairedCount++
+                    PrayerLog.alarmRepaired(
+                        alarm.prayerName,
+                        alarm.requestCode,
+                        when {
+                            !hadPendingIntent -> "pending_intent_missing"
+                            storedTrigger == null -> "registry_missing"
+                            else -> "trigger_drift"
+                        }
+                    )
+                } else {
+                    verifiedCount++
+                    PrayerLog.alarmVerified(alarm.prayerName, alarm.requestCode)
                 }
-                if (scheduler.scheduleExactAlarm(alarm.prayerName, alarm.triggerAtMillis, alarm.dayOffset)) {
-                    scheduledCount++
-                    if (!pending) {
-                        repairedCount++
-                        PrayerLog.alarmRepaired(alarm.prayerName, alarm.requestCode, repairReason)
-                    }
-                }
-            } else {
-                verifiedCount++
-                PrayerLog.alarmVerified(alarm.prayerName, alarm.requestCode)
             }
 
             if (alarm.triggerAtMillis > now) {

@@ -14,6 +14,11 @@ import kotlinx.coroutines.launch
 class PrayerAlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
+        PrayerLog.event(
+            "RECEIVER_TRIGGERED",
+            "prayer=${intent?.getStringExtra(PrayerConstants.EXTRA_PRAYER_NAME)}"
+        )
+
         if (intent?.action != PrayerConstants.ACTION_PRAYER_ALARM) return
 
         val prayerName = intent.getStringExtra(PrayerConstants.EXTRA_PRAYER_NAME) ?: return

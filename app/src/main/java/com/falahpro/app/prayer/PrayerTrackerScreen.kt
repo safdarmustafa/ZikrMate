@@ -197,7 +197,7 @@ fun PrayerTrackerScreen(
 
     val azanMode by DataStoreManager
         .getAzanMode(context)
-        .collectAsState(initial = AzanMode.SILENT)
+        .collectAsState(initial = AzanMode.FULL_SOUND)
 
     val scrollState = rememberSaveable(saver = ScrollState.Saver) { ScrollState(0) }
 

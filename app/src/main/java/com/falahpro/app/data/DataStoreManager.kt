@@ -102,7 +102,9 @@ object DataStoreManager {
     fun getAzanMode(context: Context): Flow<AzanMode> {
         return context.dataStore.data.map { prefs: Preferences ->
             AzanMode.valueOf(
-                prefs[AZAN_MODE_KEY] ?: AzanMode.SILENT.name
+                // Default FULL_SOUND so a fresh install / applicationId rename
+                // still schedules prayer alarms (SILENT cancels all alarms).
+                prefs[AZAN_MODE_KEY] ?: AzanMode.FULL_SOUND.name
             )
         }
     }
