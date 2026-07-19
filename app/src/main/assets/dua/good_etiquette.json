@@ -1,0 +1,140 @@
+[{
+  "id": 10001,
+  "title": "Entering a Gathering",
+  "arabic": "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ",
+  "transliteration": "As-salamu 'alaykum wa rahmatullahi wa barakatuh.",
+  "translation": "Peace, mercy and blessings of Allah be upon you.",
+  "whenToRecite": "When entering a gathering.",
+  "reference": {
+    "book": "Sahih Muslim",
+    "hadith": "54",
+    "number": "54"
+  },
+  "repeat": 1
+},
+  {
+    "id": 10002,
+    "title": "Leaving a Gathering",
+    "arabic": "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
+    "transliteration": "Subhanak Allahumma wa bihamdika, ash-hadu an la ilaha illa Ant, astaghfiruka wa atubu ilayk.",
+    "translation": "Glory is to You, O Allah, and praise. I bear witness that none has the right to be worshipped except You. I seek Your forgiveness and repent to You.",
+    "whenToRecite": "Before leaving a gathering.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Jami' at-Tirmidhi",
+      "number": "3433"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10003,
+    "title": "After Sneezing",
+    "arabic": "الْحَمْدُ لِلَّهِ",
+    "transliteration": "Alhamdulillah.",
+    "translation": "All praise is for Allah.",
+    "whenToRecite": "After sneezing.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6224"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10004,
+    "title": "Reply to One Who Sneezes",
+    "arabic": "يَرْحَمُكَ اللَّهُ",
+    "transliteration": "YarhamukAllah.",
+    "translation": "May Allah have mercy upon you.",
+    "whenToRecite": "When someone says 'Alhamdulillah' after sneezing.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6224"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10005,
+    "title": "Response After 'YarhamukAllah'",
+    "arabic": "يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ",
+    "transliteration": "Yahdikumullahu wa yuslihu balakum.",
+    "translation": "May Allah guide you and rectify your affairs.",
+    "whenToRecite": "After someone says 'YarhamukAllah' to you.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6224"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10006,
+    "title": "Thanking Someone",
+    "arabic": "جَزَاكَ اللَّهُ خَيْرًا",
+    "transliteration": "JazakAllahu Khayran.",
+    "translation": "May Allah reward you with goodness.",
+    "whenToRecite": "When thanking a Muslim.",
+    "reference": {
+      "book": "Jami' at-Tirmidhi",
+      "hadith": "2035",
+      "number": "2035"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10007,
+    "title": "When Seeing Something You Like",
+    "arabic": "اللَّهُمَّ بَارِكْ لَهُ",
+    "transliteration": "Allahumma barik lahu.",
+    "translation": "O Allah, bless it (or him/her).",
+    "whenToRecite": "When admiring a person, child or possession to avoid the evil eye.",
+    "reference": {
+      "book": "Musnad Ahmad",
+      "hadith": "15550",
+      "number": "15550"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10008,
+    "title": "Greeting a Muslim",
+    "arabic": "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ",
+    "transliteration": "As-salamu 'alaykum wa rahmatullahi wa barakatuh.",
+    "translation": "Peace, mercy and blessings of Allah be upon you.",
+    "whenToRecite": "When greeting another Muslim.",
+    "reference": {
+      "book": "Sahih Muslim",
+      "hadith": "54",
+      "number": "54"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10009,
+    "title": "Replying to Salam",
+    "arabic": "وَعَلَيْكُمُ السَّلَامُ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ",
+    "transliteration": "Wa 'alaykumus-salam wa rahmatullahi wa barakatuh.",
+    "translation": "And upon you be peace, mercy and blessings of Allah.",
+    "whenToRecite": "When someone greets you with Salam.",
+    "reference": {
+      "book": "Qur'an",
+      "hadith": "Surah An-Nisa",
+      "number": "4:86"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 10010,
+    "title": "Visiting the Sick",
+    "arabic": "لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
+    "transliteration": "La ba'sa, tahurun in sha' Allah.",
+    "translation": "No harm. It is a purification, if Allah wills.",
+    "whenToRecite": "When visiting someone who is ill.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "5662"
+    },
+    "repeat": 1
+  }]

@@ -1,0 +1,210 @@
+[{
+  "id": 7001,
+  "title": "The Best Statement (Tahlil)",
+  "arabic": "لَا إِلَٰهَ إِلَّا اللَّهُ",
+  "transliteration": "La ilaha illallah.",
+  "translation": "There is no deity worthy of worship except Allah.",
+  "whenToRecite": "Any time throughout the day.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Jami' at-Tirmidhi",
+    "number": "3383"
+  },
+  "repeat": 100
+},
+  {
+    "id": 7002,
+    "title": "Tasbih",
+    "arabic": "سُبْحَانَ اللَّهِ",
+    "transliteration": "SubhanAllah.",
+    "translation": "Glory be to Allah.",
+    "whenToRecite": "Any time throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2694"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7003,
+    "title": "Tahmid",
+    "arabic": "الْحَمْدُ لِلَّهِ",
+    "transliteration": "Alhamdulillah.",
+    "translation": "All praise belongs to Allah.",
+    "whenToRecite": "Any time throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2694"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7004,
+    "title": "Takbir",
+    "arabic": "اللَّهُ أَكْبَرُ",
+    "transliteration": "Allahu Akbar.",
+    "translation": "Allah is the Greatest.",
+    "whenToRecite": "Any time throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2694"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7005,
+    "title": "Hawqala",
+    "arabic": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+    "transliteration": "La hawla wa la quwwata illa billah.",
+    "translation": "There is no power and no strength except through Allah.",
+    "whenToRecite": "Any time, especially during difficulty.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6409"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7006,
+    "title": "The Four Beloved Words",
+    "arabic": "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَٰهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ",
+    "transliteration": "SubhanAllah, walhamdulillah, wa la ilaha illallah, wallahu Akbar.",
+    "translation": "Glory be to Allah, all praise belongs to Allah, there is no deity worthy of worship except Allah, and Allah is the Greatest.",
+    "whenToRecite": "Any time throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2137"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 7007,
+    "title": "Two Words Beloved to Allah",
+    "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
+    "transliteration": "SubhanAllahi wa bihamdih, SubhanAllahil-'Azim.",
+    "translation": "Glory be to Allah and praise be to Him. Glory be to Allah, the Most Great.",
+    "whenToRecite": "Any time throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "7563"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 7008,
+    "title": "SubhanAllahi wa Bihamdihi",
+    "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+    "transliteration": "SubhanAllahi wa bihamdih.",
+    "translation": "Glory be to Allah and praise be to Him.",
+    "whenToRecite": "Morning, evening or any time.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6405"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7009,
+    "title": "The Best Dhikr",
+    "arabic": "لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+    "transliteration": "La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa Huwa 'ala kulli shay'in Qadir.",
+    "translation": "There is no deity worthy of worship except Allah alone, without partner. To Him belongs the dominion and all praise, and He has power over everything.",
+    "whenToRecite": "Morning or throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "3293"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7010,
+    "title": "Sayyidul Istighfar",
+    "arabic": "اللَّهُمَّ أَنْتَ رَبِّي، لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+    "transliteration": "Allahumma anta Rabbi, la ilaha illa Ant, khalaqtani wa ana 'abduk, wa ana 'ala 'ahdika wa wa'dika mastata't, a'udhu bika min sharri ma sana't, abu'u laka bini'matika 'alayya, wa abu'u bidhanbi, faghfir li fa innahu la yaghfirudh-dhunuba illa Ant.",
+    "translation": "O Allah, You are my Lord. None has the right to be worshipped except You. You created me and I am Your servant... So forgive me, for none forgives sins except You.",
+    "whenToRecite": "Morning and evening.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6306"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 7011,
+    "title": "SubhanAllahi wa Bihamdihi, 'Adada Khalqih",
+    "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ",
+    "transliteration": "SubhanAllahi wa bihamdihi, 'adada khalqihi, wa rida nafsihi, wa zinata 'arshihi, wa midada kalimatihi.",
+    "translation": "Glory be to Allah and praise be to Him, as many times as the number of His creation, according to His good pleasure, equal to the weight of His Throne and the ink needed to write His words.",
+    "whenToRecite": "Morning or any time during the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2726"
+    },
+    "repeat": 3
+  },
+  {
+    "id": 7012,
+    "title": "SubhanAllahi wa Bihamdihi, SubhanAllahil Azim",
+    "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
+    "transliteration": "SubhanAllahi wa bihamdihi, SubhanAllahil-'Azim.",
+    "translation": "Glory be to Allah and praise be to Him. Glory be to Allah, the Most Great.",
+    "whenToRecite": "At any time during the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6406"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 7013,
+    "title": "Astaghfirullah wa Atubu Ilayh",
+    "arabic": "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+    "transliteration": "Astaghfirullaha wa atubu ilayh.",
+    "translation": "I seek Allah's forgiveness and turn to Him in repentance.",
+    "whenToRecite": "Frequently throughout the day.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "6307"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7014,
+    "title": "Tasbih Before Sleeping",
+    "arabic": "سُبْحَانَ اللَّهِ (٣٣)، الْحَمْدُ لِلَّهِ (٣٣)، اللَّهُ أَكْبَرُ (٣٤)",
+    "transliteration": "SubhanAllah (33), Alhamdulillah (33), Allahu Akbar (34).",
+    "translation": "Glory be to Allah thirty-three times, All praise is for Allah thirty-three times, and Allah is the Greatest thirty-four times.",
+    "whenToRecite": "Before going to sleep.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "3705"
+    },
+    "repeat": 100
+  },
+  {
+    "id": 7015,
+    "title": "Tasbih After Obligatory Prayer",
+    "arabic": "سُبْحَانَ اللَّهِ (٣٣)، الْحَمْدُ لِلَّهِ (٣٣)، اللَّهُ أَكْبَرُ (٣٣)، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+    "transliteration": "SubhanAllah (33), Alhamdulillah (33), Allahu Akbar (33), then: La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd wa Huwa 'ala kulli shay'in Qadir.",
+    "translation": "Glorify Allah thirty-three times, praise Him thirty-three times, magnify Him thirty-three times, then complete one hundred with: There is no deity worthy of worship except Allah alone, without partner. To Him belongs the dominion and all praise, and He has power over everything.",
+    "whenToRecite": "After every obligatory prayer.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "597"
+    },
+    "repeat": 100
+  }]

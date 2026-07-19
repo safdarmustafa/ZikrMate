@@ -1,0 +1,140 @@
+[{
+  "id": 11001,
+  "title": "Visiting the Sick",
+  "arabic": "لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
+  "transliteration": "La ba'sa, tahurun in sha' Allah.",
+  "translation": "No harm. It is a purification, if Allah wills.",
+  "whenToRecite": "When visiting someone who is ill.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sahih al-Bukhari",
+    "number": "5662"
+  },
+  "repeat": 1
+},
+  {
+    "id": 11002,
+    "title": "Ruqyah for the Sick",
+    "arabic": "أَذْهِبِ الْبَأْسَ رَبَّ النَّاسِ، اشْفِ وَأَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا",
+    "transliteration": "Adhhibil-ba'sa Rabban-nas, ishfi wa Antash-Shafi, la shifa'a illa shifa'uk, shifa'an la yughadiru saqama.",
+    "translation": "Remove the suffering, Lord of mankind. Grant healing, for You are the Healer. There is no healing except Your healing, a healing that leaves no illness behind.",
+    "whenToRecite": "When making ruqyah for a sick person.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "5743"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 11003,
+    "title": "For Pain in the Body",
+    "arabic": "بِسْمِ اللَّهِ",
+    "transliteration": "Bismillah.",
+    "translation": "In the Name of Allah.",
+    "whenToRecite": "Place your hand on the area of pain and say this three times.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2202"
+    },
+    "repeat": 3
+  },
+  {
+    "id": 11004,
+    "title": "Supplication for Pain",
+    "arabic": "أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ",
+    "transliteration": "A'udhu billahi wa qudratihi min sharri ma ajidu wa uhadhir.",
+    "translation": "I seek refuge in Allah and His Power from the evil of what I find and what I fear.",
+    "whenToRecite": "After saying 'Bismillah' three times, repeat this seven times.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2202"
+    },
+    "repeat": 7
+  },
+  {
+    "id": 11005,
+    "title": "Supplication for Recovery",
+    "arabic": "اللَّهُمَّ اشْفِ عَبْدَكَ",
+    "transliteration": "Allahummashfi 'abdak.",
+    "translation": "O Allah, heal Your servant.",
+    "whenToRecite": "When praying for someone's recovery.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sunan Abu Dawood",
+      "number": "3107"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 11006,
+    "title": "At the Time of Death",
+    "arabic": "لَا إِلَٰهَ إِلَّا اللَّهُ",
+    "transliteration": "La ilaha illallah.",
+    "translation": "There is no deity worthy of worship except Allah.",
+    "whenToRecite": "Prompt the dying person gently with these words.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "916"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 11007,
+    "title": "Upon Hearing of a Death",
+    "arabic": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
+    "transliteration": "Inna lillahi wa inna ilayhi raji'un.",
+    "translation": "Surely we belong to Allah and to Him we shall return.",
+    "whenToRecite": "Upon hearing the news of someone's death.",
+    "reference": {
+      "book": "Qur'an",
+      "hadith": "Surah Al-Baqarah",
+      "number": "2:156"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 11008,
+    "title": "Entering the Graveyard",
+    "arabic": "السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لَلَاحِقُونَ، نَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ",
+    "transliteration": "As-salamu 'alaykum ahlad-diyari minal-mu'minina wal-muslimin, wa inna in sha' Allahu bikum lalaḥiqun, nas'alullaha lana wa lakumul-'afiyah.",
+    "translation": "Peace be upon you, dwellers of these homes, believers and Muslims. We will, if Allah wills, join you. We ask Allah to grant us and you well-being.",
+    "whenToRecite": "When visiting a Muslim graveyard.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "975"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 11009,
+    "title": "Supplication for the Deceased",
+    "arabic": "اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ، وَعَافِهِ وَاعْفُ عَنْهُ",
+    "transliteration": "Allahummaghfir lahu warhamhu wa 'afihi wa'fu 'anhu.",
+    "translation": "O Allah, forgive him, have mercy on him, grant him well-being and pardon him.",
+    "whenToRecite": "When making dua for a deceased Muslim.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "963"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 11010,
+    "title": "Consoling the Bereaved",
+    "arabic": "إِنَّ لِلَّهِ مَا أَخَذَ، وَلَهُ مَا أَعْطَى، وَكُلُّ شَيْءٍ عِنْدَهُ بِأَجَلٍ مُسَمًّى، فَلْتَصْبِرْ وَلْتَحْتَسِبْ",
+    "transliteration": "Inna lillahi ma akhadh, wa lahu ma a'ta, wa kullu shay'in 'indahu bi ajalin musamma, faltasbir waltahtasib.",
+    "translation": "Indeed, to Allah belongs what He takes and what He gives, and everything with Him has an appointed time. So be patient and seek your reward from Allah.",
+    "whenToRecite": "To console someone who has lost a loved one.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "1284"
+    },
+    "repeat": 1
+  }]
