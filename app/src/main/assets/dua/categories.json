@@ -1,0 +1,112 @@
+[
+  {
+    "id": "morning_evening",
+    "title": "Morning & Evening",
+    "description": "Daily adhkar for mornings and evenings.",
+    "icon": "🌅",
+    "file": "morning_evening.json",
+    "count": 0,
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "prayer",
+    "title": "Prayer",
+    "description": "Duas before, during, and after Salah.",
+    "icon": "🕌",
+    "file": "prayer.json",
+    "count": 0,
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "food_drink",
+    "title": "Food & Drink",
+    "description": "Supplications before and after eating and drinking.",
+    "icon": "🌮",
+    "file": "food_drink.json",
+    "count": 0,
+    "featured": true,
+    "order": 3
+  },
+  {
+    "id": "good_etiquette",
+    "title": "Good Etiquette",
+    "description": "Islamic manners and everyday etiquette.",
+    "icon": "🤲",
+    "file": "good_etiquette.json",
+    "count": 0,
+    "featured": true,
+    "order": 4
+  },
+  {
+    "id": "home_family",
+    "title": "Home & Family",
+    "description": "Duas related to home, parents, spouse, and children.",
+    "icon": "🏡",
+    "file": "home_family.json",
+    "count": 0,
+    "featured": true,
+    "order": 5
+  },
+  {
+    "id": "travel",
+    "title": "Travel",
+    "description": "Supplications for journeys and transportation.",
+    "icon": "✈️",
+    "file": "travel.json",
+    "count": 0,
+    "featured": true,
+    "order": 6
+  },
+  {
+    "id": "joy_distress",
+    "title": "Joy & Distress",
+    "description": "Duas for happiness, anxiety, grief, and hardship.",
+    "icon": "🌤️",
+    "file": "joy_distress.json",
+    "count": 0,
+    "featured": true,
+    "order": 7
+  },
+  {
+    "id": "sickness_death",
+    "title": "Sickness & Death",
+    "description": "Supplications for illness, recovery, and bereavement.",
+    "icon": "❤️‍🩹",
+    "file": "sickness_death.json",
+    "count": 0,
+    "featured": true,
+    "order": 8
+  },
+  {
+    "id": "hajj_umrah",
+    "title": "Hajj & Umrah",
+    "description": "Essential duas during Hajj and Umrah.",
+    "icon": "🕋",
+    "file": "hajj_umrah.json",
+    "count": 0,
+    "featured": true,
+    "order": 9
+  },
+  {
+    "id": "nature",
+    "title": "Nature",
+    "description": "Duas related to rain, wind, thunder, and natural events.",
+    "icon": "🌿",
+    "file": "nature.json",
+    "count": 0,
+    "featured": false,
+    "order": 10
+  },
+  {
+    "id": "praising_allah",
+    "title": "Praising Allah",
+    "description": "Tasbeeh, Tahmeed, Takbeer, and other praises of Allah.",
+    "icon": "☪️",
+    "file": "praising_allah.json",
+    "count": 0,
+    "featured": true,
+    "order": 11
+  }
+]

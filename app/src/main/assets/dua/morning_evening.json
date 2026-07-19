@@ -1,0 +1,69 @@
+[{
+  "id": 1001,
+  "title": "Upon Waking Up",
+  "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+  "transliteration": "Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur.",
+  "translation": "All praise is for Allah who gave us life after causing us to die, and to Him is the resurrection.",
+  "whenToRecite": "Immediately after waking from sleep.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sahih al-Bukhari",
+    "number": "6312"
+  },
+  "repeat": 1,
+  "favorite": false
+},{
+  "id": 1002,
+  "title": "Before Sleeping",
+  "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+  "transliteration": "Bismika Allahumma amutu wa ahya.",
+  "translation": "In Your Name, O Allah, I die and I live.",
+  "whenToRecite": "Before going to sleep.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sahih al-Bukhari",
+    "number": "6324"
+  },
+  "repeat": 1
+},{
+  "id": 1003,
+  "title": "Morning Remembrance",
+  "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+  "transliteration": "Asbahna wa asbahal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa huwa 'ala kulli shay'in qadir.",
+  "translation": "We have entered the morning and all sovereignty belongs to Allah. All praise is for Allah. None has the right to be worshipped except Allah alone, without partner. His is the dominion, His is the praise, and He has power over all things.",
+  "whenToRecite": "Every morning after Fajr or after waking.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sahih Muslim",
+    "number": "2723"
+  },
+  "repeat": 1
+},{
+  "id": 1004,
+  "title": "Evening Remembrance",
+  "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+  "transliteration": "Amsayna wa amsal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa huwa 'ala kulli shay'in qadir.",
+  "translation": "We have entered the evening and all sovereignty belongs to Allah. All praise is for Allah. None has the right to be worshipped except Allah alone, without partner. His is the dominion, His is the praise, and He has power over all things.",
+  "whenToRecite": "Every evening after Asr or Maghrib.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sahih Muslim",
+    "number": "2723"
+  },
+  "repeat": 1
+},{
+  "id": 1005,
+  "title": "Sayyidul Istighfar",
+  "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+  "transliteration": "Allahumma anta Rabbi la ilaha illa Anta, khalaqtani wa ana 'abduka, wa ana 'ala 'ahdika wa wa'dika mastata'tu, a'udhu bika min sharri ma sana'tu, abu'u laka bini'matika 'alayya, wa abu'u bidhambi, faghfir li fa innahu la yaghfirudh-dhunuba illa Anta.",
+  "translation": "O Allah, You are my Lord. None has the right to be worshipped except You. You created me and I am Your servant. I uphold Your covenant and promise as best I can. I seek refuge in You from the evil of what I have done. I acknowledge before You all the blessings You have bestowed upon me, and I confess my sins to You, so forgive me, for none forgives sins except You.",
+  "whenToRecite": "Morning and evening.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sahih al-Bukhari",
+    "number": "6306"
+  },
+  "repeat": 1
+}
+]
+

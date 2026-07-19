@@ -1,7 +1,9 @@
 package com.falahpro.app
 
 import android.Manifest
+import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,7 +28,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.falahpro.app.auth.LoginScreen
-import com.falahpro.app.dua.DuaScreen
+import com.falahpro.app.dua.DuaDetailScreen
+import com.falahpro.app.dua.DuaLibraryScreen
+import com.falahpro.app.dua.DuaListScreen
 import com.falahpro.app.profile.ProfileScreen
 import com.falahpro.app.prayer.PrayerDiagnosticsScreen
 import com.falahpro.app.prayer.PrayerTrackerScreen
@@ -36,7 +40,6 @@ import com.falahpro.app.qibla.QiblaScreen
 import com.falahpro.app.tasbih.TasbihScreen
 import com.falahpro.app.ui.theme.SplashScreenJcTheme
 import com.google.firebase.auth.FirebaseAuth
-import android.os.Bundle
 
 class FalahPro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,7 +154,36 @@ fun AppNavigation() {
             }
 
             composable("dua") {
-                DuaScreen()
+                DuaLibraryScreen(
+                    onCategoryClick = { category ->
+                        navController.navigate("dua_list/${Uri.encode(category.file)}")
+                    }
+                )
+            }
+
+            composable("dua_list/{file}") { backStackEntry ->
+                val file = Uri.decode(backStackEntry.arguments?.getString("file").orEmpty())
+
+                DuaListScreen(
+                    fileName = file,
+                    onBack = { navController.popBackStack() },
+                    onDuaClick = { dua ->
+                        navController.navigate(
+                            "dua_detail/${Uri.encode(file)}/${dua.id}"
+                        )
+                    }
+                )
+            }
+
+            composable("dua_detail/{file}/{duaId}") { backStackEntry ->
+                val file = Uri.decode(backStackEntry.arguments?.getString("file").orEmpty())
+                val duaId = backStackEntry.arguments?.getString("duaId")?.toIntOrNull() ?: -1
+
+                DuaDetailScreen(
+                    fileName = file,
+                    duaId = duaId,
+                    onBack = { navController.popBackStack() }
+                )
             }
 
             composable("profile") {
