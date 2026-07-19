@@ -56,7 +56,7 @@ class AzanPlaybackService : Service() {
 
     private fun buildPlaybackNotification(prayerName: String) =
         NotificationCompat.Builder(this, PrayerConstants.AZAN_PLAYBACK_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentTitle("Playing Azan")
             .setContentText("$prayerName prayer")
             .setPriority(NotificationCompat.PRIORITY_LOW)

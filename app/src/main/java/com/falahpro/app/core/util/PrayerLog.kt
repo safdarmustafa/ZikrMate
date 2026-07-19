@@ -45,7 +45,6 @@ object PrayerLog {
     fun notificationPosted(prayer: String) = event("NOTIFICATION_POSTED", "prayer=$prayer")
     fun audioStarted() = event("AUDIO_STARTED")
     fun audioCompleted() = event("AUDIO_COMPLETED")
-    fun azanFinished() = audioCompleted()
     fun serviceStarted(prayer: String) = event("SERVICE_STARTED", "prayer=$prayer")
     fun serviceStopped() = event("SERVICE_STOPPED")
     fun wakeLockAcquired() = event("WAKELOCK_ACQUIRED")
@@ -66,7 +65,4 @@ object PrayerLog {
         event("LOCATION_CHANGED", "old=$oldLat,$oldLng new=$newLat,$newLng")
     fun receiverEntered(prayer: String) = event("RECEIVER_ENTERED", "prayer=$prayer")
     fun exactAlarmDenied() = warn("EXACT_ALARM_DENIED", "user must grant Alarms & reminders")
-
-    @Deprecated("Use warn()", ReplaceWith("warn(message)"))
-    fun warning(message: String) = warn("WARNING", message)
 }

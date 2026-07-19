@@ -4,9 +4,14 @@ import android.Manifest
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.core.app.ActivityCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -40,13 +46,58 @@ import com.falahpro.app.qibla.QiblaScreen
 import com.falahpro.app.tasbih.TasbihScreen
 import com.falahpro.app.ui.theme.SplashScreenJcTheme
 import com.google.firebase.auth.FirebaseAuth
+import java.util.concurrent.atomic.AtomicBoolean
 
 class FalahPro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashStartMs = SystemClock.uptimeMillis()
+        val firstScreenDrawn = AtomicBoolean(false)
+        val splashExitAllowed = AtomicBoolean(false)
+
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition {
+            val underMinDuration =
+                SystemClock.uptimeMillis() - splashStartMs < SPLASH_DURATION_MS
+            underMinDuration || !splashExitAllowed.get()
+        }
+        splashScreen.setOnExitAnimationListener { provider ->
+            // Instant reveal of the already-drawn screen.
+            // Never alpha-fade the cream splash over dark UI (that blend = flicker).
+            provider.iconView.animate().cancel()
+            provider.view.animate().cancel()
+            provider.iconView.visibility = View.GONE
+            provider.iconView.alpha = 0f
+            provider.view.alpha = 0f
+            provider.remove()
+            window.decorView.postDelayed({ maybeRequestNotifications() }, 400L)
+        }
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        installSplashScreen()
 
+        setContent {
+            SplashScreenJcTheme(dynamicColor = false) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(AppBackground)
+                ) {
+                    AuthGate(
+                        onFirstScreenDrawn = {
+                            if (firstScreenDrawn.compareAndSet(false, true)) {
+                                // Extra settle so Tasbih count/gradient finish first paint.
+                                window.decorView.postDelayed({
+                                    splashExitAllowed.set(true)
+                                }, 120L)
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    private fun maybeRequestNotifications() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(
                 this,
@@ -54,23 +105,28 @@ class FalahPro : ComponentActivity() {
                 1
             )
         }
+    }
 
-        setContent {
-            SplashScreenJcTheme {
-                AuthGate()
-            }
-        }
+    companion object {
+        private const val SPLASH_DURATION_MS = 1_000L
+        private val AppBackground = Color(0xFF1A120F)
     }
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    onFirstScreenDrawn: () -> Unit = {}
+) {
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     fun navigateToTab(route: String) {
+        // Profile is pushed on top of tabs; pop back to the tab when it's already under us.
+        if (navController.popBackStack(route, inclusive = false)) {
+            return
+        }
         navController.navigate(route) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
@@ -81,6 +137,10 @@ fun AppNavigation() {
     }
 
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF1A120F)),
+        containerColor = Color(0xFF1A120F),
         bottomBar = {
             NavigationBar(
                 containerColor = Color(0xFF1A120F)
@@ -109,12 +169,6 @@ fun AppNavigation() {
                     icon = { Text("📖") },
                     label = { Text("Dua") }
                 )
-                NavigationBarItem(
-                    selected = currentRoute == "profile",
-                    onClick = { navigateToTab("profile") },
-                    icon = { Text("👤") },
-                    label = { Text("Profile") }
-                )
             }
         }
     ) { innerPadding ->
@@ -129,7 +183,14 @@ fun AppNavigation() {
         ) {
 
             composable("tasbih") {
-                TasbihScreen()
+                TasbihScreen(
+                    onProfileClick = {
+                        navController.navigate("profile") {
+                            launchSingleTop = true
+                        }
+                    },
+                    onReady = onFirstScreenDrawn
+                )
             }
 
             composable("prayer") {
@@ -201,7 +262,9 @@ fun AppNavigation() {
 }
 
 @Composable
-fun AuthGate() {
+fun AuthGate(
+    onFirstScreenDrawn: () -> Unit = {}
+) {
 
     val auth = FirebaseAuth.getInstance()
     var isLoggedIn by remember { mutableStateOf(auth.currentUser != null) }
@@ -219,12 +282,18 @@ fun AuthGate() {
     }
 
     if (isLoggedIn) {
-        AppNavigation()
+        AppNavigation(onFirstScreenDrawn = onFirstScreenDrawn)
     } else {
-        LoginScreen(
-            onLoginSuccess = {
-                isLoggedIn = true
-            }
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .onGloballyPositioned { onFirstScreenDrawn() }
+        ) {
+            LoginScreen(
+                onLoginSuccess = {
+                    isLoggedIn = true
+                }
+            )
+        }
     }
 }

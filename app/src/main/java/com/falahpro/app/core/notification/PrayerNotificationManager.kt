@@ -91,7 +91,7 @@ class PrayerNotificationManager(private val context: Context) {
         }
 
         val builder = NotificationCompat.Builder(context, PrayerConstants.NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentTitle("🕌 $prayerName")
             .setContentText("It's time for $prayerName prayer")
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))

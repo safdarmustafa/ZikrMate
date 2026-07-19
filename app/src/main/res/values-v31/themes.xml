@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Splash: cream + branded icon. postSplashScreenTheme switches to dark app chrome. -->
     <style name="Theme.FalahPro.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_branded</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_background</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
         <item name="windowSplashScreenBackground">@color/splash_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_branded</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/splash_background</item>
@@ -11,15 +14,6 @@
         <item name="android:windowBackground">@drawable/splash_window_background</item>
         <item name="android:statusBarColor">@color/splash_background</item>
         <item name="android:navigationBarColor">@color/splash_background</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
-
-    <!-- After splash: dark window so handoff to Tasbih never flashes cream/white -->
-    <style name="Theme.FalahPro" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/app_background</item>
-        <item name="android:statusBarColor">@color/app_background</item>
-        <item name="android:navigationBarColor">@color/app_background</item>
-        <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 

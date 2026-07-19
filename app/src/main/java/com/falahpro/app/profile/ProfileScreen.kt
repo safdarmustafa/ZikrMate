@@ -45,7 +45,7 @@ fun ProfileScreen(
     val context = LocalContext.current
     val user = FirebaseAuth.getInstance().currentUser
 
-    val name = user?.displayName ?: "Zikr Companion"
+    val name = user?.displayName ?: "Falah Pro User"
     val email = user?.email ?: "No Email"
     val photoUrl = user?.photoUrl
 
