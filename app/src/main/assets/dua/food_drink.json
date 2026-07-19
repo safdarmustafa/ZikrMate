@@ -1,0 +1,140 @@
+[{
+  "id": 2001,
+  "title": "Before Eating (Bismillah)",
+  "arabic": "بِسْمِ اللَّهِ",
+  "transliteration": "Bismillah",
+  "translation": "In the Name of Allah.",
+  "whenToRecite": "Before starting to eat or drink.",
+  "reference": {
+    "book": "Hisnul Muslim",
+    "hadith": "Sunan Abu Dawood",
+    "number": "3767"
+  },
+  "repeat": 1
+},
+  {
+    "id": 2002,
+    "title": "If You Forget to Say Bismillah",
+    "arabic": "بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ",
+    "transliteration": "Bismillahi awwalahu wa akhirahu.",
+    "translation": "In the Name of Allah, at its beginning and at its end.",
+    "whenToRecite": "If you forgot to say Bismillah before eating.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Jami' at-Tirmidhi",
+      "number": "1858"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2003,
+    "title": "After Finishing a Meal",
+    "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
+    "transliteration": "Alhamdulillahil-ladhi at'amani hadha wa razaqanihi min ghayri hawlin minni wa la quwwah.",
+    "translation": "All praise is for Allah who fed me this and provided it for me without any power or strength from myself.",
+    "whenToRecite": "After completing a meal.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sunan Abu Dawood",
+      "number": "4023"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2004,
+    "title": "Supplication for the Host",
+    "arabic": "اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُمْ وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ",
+    "transliteration": "Allahumma barik lahum fima razaqtahum, waghfir lahum, warhamhum.",
+    "translation": "O Allah, bless them in what You have provided them, forgive them, and have mercy upon them.",
+    "whenToRecite": "After eating at someone's home.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2042"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2005,
+    "title": "After Drinking Milk",
+    "arabic": "اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ",
+    "transliteration": "Allahumma barik lana fihi wa zidna minhu.",
+    "translation": "O Allah, bless it for us and give us more of it.",
+    "whenToRecite": "After drinking milk.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sunan Abu Dawood",
+      "number": "3730"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2006,
+    "title": "At the Time of Breaking the Fast",
+    "arabic": "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ",
+    "transliteration": "Dhahabaz-zama'u wabtallatil-'urooqu wa thabatal-ajru in shaa Allah.",
+    "translation": "The thirst has gone, the veins are moistened, and the reward is confirmed, if Allah wills.",
+    "whenToRecite": "Immediately after breaking the fast.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sunan Abu Dawood",
+      "number": "2357"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2007,
+    "title": "For the One Who Provides Food",
+    "arabic": "اللَّهُمَّ أَطْعِمْ مَنْ أَطْعَمَنِي وَاسْقِ مَنْ سَقَانِي",
+    "transliteration": "Allahumma at'im man at'amani wasqi man saqani.",
+    "translation": "O Allah, feed the one who fed me and give drink to the one who gave me drink.",
+    "whenToRecite": "After someone offers you food or drink.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih Muslim",
+      "number": "2055"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2008,
+    "title": "After Eating at Someone's Home",
+    "arabic": "أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ وَصَلَّتْ عَلَيْكُمُ الْمَلَائِكَةُ",
+    "transliteration": "Aftara 'indakumus-sa'imoon, wa akala ta'amakumul-abrar, wa sallat 'alaykumul-mala'ikah.",
+    "translation": "May those who fast break their fast with you, may the righteous eat your food, and may the angels pray for you.",
+    "whenToRecite": "After eating at the home of a fasting person or host.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sunan Abu Dawood",
+      "number": "3854"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2009,
+    "title": "While Drinking Zamzam Water",
+    "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا وَاسِعًا وَشِفَاءً مِنْ كُلِّ دَاءٍ",
+    "transliteration": "Allahumma inni as'aluka 'ilman nafi'an wa rizqan wasi'an wa shifa'an min kulli da'.",
+    "translation": "O Allah, I ask You for beneficial knowledge, abundant provision, and healing from every illness.",
+    "whenToRecite": "While drinking Zamzam water.",
+    "reference": {
+      "book": "Reported from Ibn Abbas",
+      "hadith": "Al-Mustadrak",
+      "number": "1739"
+    },
+    "repeat": 1
+  },
+  {
+    "id": 2010,
+    "title": "General Gratitude for Food and Drink",
+    "arabic": "الْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ غَيْرَ مَكْفِيٍّ وَلَا مُوَدَّعٍ وَلَا مُسْتَغْنًى عَنْهُ رَبَّنَا",
+    "transliteration": "Alhamdu lillahi hamdan kathiran tayyiban mubarakan fihi ghayra makfiyyin wa la muwadda'in wa la mustaghnan 'anhu Rabbana.",
+    "translation": "All praise is for Allah, abundant, pure and blessed praise. Our Lord, we can never do without Your favors, nor can we ever repay or abandon them.",
+    "whenToRecite": "After finishing a meal.",
+    "reference": {
+      "book": "Hisnul Muslim",
+      "hadith": "Sahih al-Bukhari",
+      "number": "5458"
+    },
+    "repeat": 1
+  }]
